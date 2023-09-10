@@ -1,1 +1,18 @@
-{}
+{
+    "form": {
+        "Title": "TMW Universe Account",
+        "steps": {
+            "username-and-password": {
+                "fields": {
+                    "username": {
+                        "Label": "Username"
+                    },
+                    "password": {
+                        "Label": "Password"
+                    }
+                },
+                "Submit": "Login"
+            }
+        }
+    }
+}
