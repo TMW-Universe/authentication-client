@@ -7,7 +7,11 @@ import { Translations } from "../../i18n/translations.enum";
 
 const { Title } = Typography;
 
-export function LoginForm() {
+type Props = {
+  domain: string;
+};
+
+export default function LoginForm({ domain }: Props) {
   const { t } = useTranslation([Translations.login]);
 
   return (
@@ -25,7 +29,10 @@ export function LoginForm() {
         </Row>
       </Col>
       <Col span={24}>
-        <UsernameAndPasswordFormStep onSuccessfulCredentials={() => {}} />
+        <UsernameAndPasswordFormStep
+          onSuccessfulCredentials={() => {}}
+          domain={domain}
+        />
       </Col>
     </Row>
   );

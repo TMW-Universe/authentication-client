@@ -4,19 +4,28 @@ import FormItem from "antd/es/form/FormItem";
 import { useTranslation } from "react-i18next";
 import { Translations } from "../../../i18n/translations.enum";
 import { KeyOutlined, UserOutlined } from "@ant-design/icons";
+import { useLogin } from "../../../hooks/api/authentication/v1/use-login";
 
 type Props = {
+  domain: string;
   onSuccessfulCredentials: (props: UsernameAndPasswordFormResult) => void;
 };
 
-export default function UsernameAndPasswordFormStep({}: Props) {
+export default function UsernameAndPasswordFormStep({ domain }: Props) {
   const { t } = useTranslation([Translations.login]);
 
   const [form] = useForm<UsernameAndPasswordFormModel>();
 
+  const { mutateAsync: loginMutation, isLoading: isLoggingIn } =
+    useLogin(domain);
+
+  const login = async (values: UsernameAndPasswordFormModel) => {
+    await loginMutation(values);
+  };
+
   return (
-    <Form form={form}>
-      <FormItem name="username">
+    <Form form={form} onFinish={login}>
+      <FormItem name="username" required>
         <Input
           placeholder={t(
             "form.steps.username-and-password.fields.username.Label"
@@ -24,7 +33,7 @@ export default function UsernameAndPasswordFormStep({}: Props) {
           prefix={<UserOutlined />}
         />
       </FormItem>
-      <FormItem name="password">
+      <FormItem name="password" required>
         <Input.Password
           placeholder={t(
             "form.steps.username-and-password.fields.password.Label"
@@ -32,15 +41,24 @@ export default function UsernameAndPasswordFormStep({}: Props) {
           prefix={<KeyOutlined />}
         />
       </FormItem>
-      <Button type="primary" htmlType="submit" block>
+      <Button
+        type="primary"
+        htmlType="submit"
+        block
+        onClick={() => form.submit}
+        loading={isLoggingIn}
+      >
         {t("form.steps.username-and-password.Submit")}
       </Button>
     </Form>
   );
 }
 
-interface UsernameAndPasswordFormModel {}
+interface UsernameAndPasswordFormModel {
+  username: string;
+  password: string;
+}
 
 export type UsernameAndPasswordFormResult =
-  | { requires2FA: true; username: string; password: string }
+  | { requires2FA: true; credentials: UsernameAndPasswordFormModel }
   | { requires2FA: false; accessToken: string };
