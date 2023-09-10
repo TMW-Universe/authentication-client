@@ -1,31 +1,38 @@
 import { useState } from "react";
 import { AuthCredentialsModel } from "../../../models/auth/auth-credentials.model";
-import UsernameAndPasswordFormStep from "./username-and-password-form-step";
+import UsernameAndPasswordFormStep from "./credentials/username-and-password-form-step";
 import { DomainModel } from "../../../models/domain/domain.model";
-import PermissionsFormStep from "./permissions/permissions-form-step";
+import TwoFAFormStep from "./two-fa/two-fa-form-step";
+import StaySignedInFormStep from "./stay-signed-in/stay-signed-in-form-step";
 
 type Props = {
   domain: DomainModel;
 };
 
 export default function LoginSteps({ domain }: Props) {
-  const [hasAcceptedPermissions, setHasAcceptedPermissions] = useState(false);
   const [accessToken, setAccessToken] = useState<string>();
   const [credentials, setCredentials] = useState<
     AuthCredentialsModel & { requires2FA: boolean }
   >();
+  const [staySignedIn, setStaySignedIn] = useState<boolean>();
 
-  if (!hasAcceptedPermissions) {
+  if (credentials?.requires2FA && !accessToken) {
     return (
-      <PermissionsFormStep
-        onAccept={() => setHasAcceptedPermissions(true)}
-        domain={domain}
+      <TwoFAFormStep
+        setAccessToken={setAccessToken}
+        credentials={credentials}
       />
     );
   }
 
-  if (credentials?.requires2FA) {
-    return <>2FA</>;
+  if (accessToken && staySignedIn === undefined) {
+    return (
+      <StaySignedInFormStep domain={domain} setStaySignedIn={setStaySignedIn} />
+    );
+  }
+
+  if (accessToken && staySignedIn !== undefined) {
+    return <>END</>;
   }
 
   return (

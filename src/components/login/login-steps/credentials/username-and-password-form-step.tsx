@@ -2,18 +2,21 @@ import { Button, Form, Input } from "antd";
 import { useForm } from "antd/es/form/Form";
 import FormItem from "antd/es/form/FormItem";
 import { useTranslation } from "react-i18next";
-import { Translations } from "../../../i18n/translations.enum";
+import { Translations } from "../../../../i18n/translations.enum";
 import { KeyOutlined, UserOutlined } from "@ant-design/icons";
-import { useLogin } from "../../../hooks/api/authentication/v1/use-login";
-import { AuthCredentialsModel } from "../../../models/auth/auth-credentials.model";
-import { DomainModel } from "../../../models/domain/domain.model";
+import { useLogin } from "../../../../hooks/api/authentication/v1/use-login";
+import { AuthCredentialsModel } from "../../../../models/auth/auth-credentials.model";
+import { DomainModel } from "../../../../models/domain/domain.model";
 
 type Props = {
   domain: DomainModel;
   onSuccessfulCredentials: (props: UsernameAndPasswordFormResult) => void;
 };
 
-export default function UsernameAndPasswordFormStep({ domain }: Props) {
+export default function UsernameAndPasswordFormStep({
+  domain,
+  onSuccessfulCredentials,
+}: Props) {
   const { t } = useTranslation([Translations.login]);
 
   const [form] = useForm<UsernameAndPasswordFormModel>();
@@ -23,7 +26,17 @@ export default function UsernameAndPasswordFormStep({ domain }: Props) {
   );
 
   const login = async (values: UsernameAndPasswordFormModel) => {
-    await loginMutation(values);
+    try {
+      await loginMutation(values);
+    } catch (e) {
+      console.error(e);
+    }
+
+    // DEBUG (must remove)
+    onSuccessfulCredentials({
+      requires2FA: true,
+      credentials: form.getFieldsValue(),
+    });
   };
 
   return (

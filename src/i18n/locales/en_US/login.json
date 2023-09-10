@@ -2,14 +2,6 @@
     "form": {
         "Title": "TMW Universe Account",
         "steps": {
-            "info": {
-                "Message": "The following permissions are being requested by ",
-                "actions": {
-                    "proceed": {
-                        "Text": "Accpect and proceed"
-                    }
-                }
-            },
             "username-and-password": {
                 "fields": {
                     "username": {
@@ -20,6 +12,27 @@
                     }
                 },
                 "Submit": "Login"
+            },
+            "two-fa": {
+                "Message": "Two Factor Authentication is enabled. You are required to introduce a verification code in order to authenticate.",
+                "fields": {
+                    "code": {
+                        "Label": "Code"
+                    }
+                },
+                "Submit": "Verify"
+            },
+            "stay-signed-in": {
+                "Title": "Do you want to stay signed in?",
+                "Description": "You will not be requested to authenticate when accessing {{domainName}} for 45 days.",
+                "actions": {
+                    "yes": {
+                        "Text": "Yes"
+                    },
+                    "no": {
+                        "Text": "No"
+                    }
+                }
             }
         }
     }
