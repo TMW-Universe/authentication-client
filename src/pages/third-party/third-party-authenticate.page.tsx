@@ -11,7 +11,11 @@ export default function ThirdPartyAuthenticate() {
   return (
     <div className={styles.container}>
       <Card>
-        <LoginForm domain={domain} />
+        <LoginForm
+          domain={{
+            domain: domain,
+          }}
+        />
       </Card>
     </div>
   );

@@ -1,14 +1,15 @@
-import { Col, Row, Typography, theme } from "antd";
-import UsernameAndPasswordFormStep from "./login-steps/username-and-password-form-step";
+import { Col, Divider, Row, Typography, theme } from "antd";
 import tmw_universe_logo from "../../assets/branding/tmw_universe_logo.png";
 import styles from "./login-form.module.css";
 import { useTranslation } from "react-i18next";
 import { Translations } from "../../i18n/translations.enum";
+import LoginSteps from "./login-steps/login-steps";
+import { DomainModel } from "../../models/domain/domain.model";
 
 const { Title, Link } = Typography;
 
 type Props = {
-  domain: string;
+  domain: DomainModel;
 };
 
 export default function LoginForm({ domain }: Props) {
@@ -22,7 +23,7 @@ export default function LoginForm({ domain }: Props) {
   };
 
   return (
-    <Row gutter={[12, 48]}>
+    <Row gutter={[12, 12]}>
       <Col span={24}>
         <Row gutter={[1, 1]}>
           <Col span={24} className={styles.logo}>
@@ -31,16 +32,14 @@ export default function LoginForm({ domain }: Props) {
           <Col span={24} className={styles["title-container"]}>
             <Title level={4}>{t("form.Title")}</Title>
             <Link onClick={openDomain} style={{ color: token.colorPrimary }}>
-              {domain}
+              {domain.domain}
             </Link>
           </Col>
         </Row>
+        <Divider />
       </Col>
       <Col span={24}>
-        <UsernameAndPasswordFormStep
-          onSuccessfulCredentials={() => {}}
-          domain={domain}
-        />
+        <LoginSteps domain={domain} />
       </Col>
     </Row>
   );

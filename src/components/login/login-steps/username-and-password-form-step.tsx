@@ -5,9 +5,11 @@ import { useTranslation } from "react-i18next";
 import { Translations } from "../../../i18n/translations.enum";
 import { KeyOutlined, UserOutlined } from "@ant-design/icons";
 import { useLogin } from "../../../hooks/api/authentication/v1/use-login";
+import { AuthCredentialsModel } from "../../../models/auth/auth-credentials.model";
+import { DomainModel } from "../../../models/domain/domain.model";
 
 type Props = {
-  domain: string;
+  domain: DomainModel;
   onSuccessfulCredentials: (props: UsernameAndPasswordFormResult) => void;
 };
 
@@ -16,8 +18,9 @@ export default function UsernameAndPasswordFormStep({ domain }: Props) {
 
   const [form] = useForm<UsernameAndPasswordFormModel>();
 
-  const { mutateAsync: loginMutation, isLoading: isLoggingIn } =
-    useLogin(domain);
+  const { mutateAsync: loginMutation, isLoading: isLoggingIn } = useLogin(
+    domain.domain
+  );
 
   const login = async (values: UsernameAndPasswordFormModel) => {
     await loginMutation(values);
@@ -60,5 +63,5 @@ interface UsernameAndPasswordFormModel {
 }
 
 export type UsernameAndPasswordFormResult =
-  | { requires2FA: true; credentials: UsernameAndPasswordFormModel }
+  | { requires2FA: true; credentials: AuthCredentialsModel }
   | { requires2FA: false; accessToken: string };
