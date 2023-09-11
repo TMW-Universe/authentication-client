@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { HttpException } from "../../../../networking/errors/http.exception";
 
 type Options = {
   username: string;
@@ -7,7 +8,11 @@ type Options = {
 };
 
 export function useLogin(domain: string) {
-  return useMutation({
+  return useMutation<
+    AxiosResponse<ResponseType>,
+    AxiosError<HttpException>,
+    Options
+  >({
     mutationFn: async (options: Options) =>
       await axios.post<ResponseType>(
         `${import.meta.env.VITE_API_HOST}/api/authentication/login`,

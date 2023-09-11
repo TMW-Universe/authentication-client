@@ -40,6 +40,9 @@
         "invalid-domain": {
             "Title": "Invalid domain",
             "Message": "The domain {{domain}} is not recognized by the authentication server."
+        },
+        "wrong-credentials": {
+            "Message": "The user does not exist or the password is wrong"
         }
     }
 }
