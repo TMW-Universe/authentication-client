@@ -10,5 +10,6 @@ export function useDomainInfo(domain: string) {
       ),
     queryKey: ["domains", domain, "info"],
     retry: false,
+    refetchOnWindowFocus: false,
   });
 }
