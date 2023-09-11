@@ -3,7 +3,11 @@ import { useForm } from "antd/es/form/Form";
 import FormItem from "antd/es/form/FormItem";
 import { useTranslation } from "react-i18next";
 import { Translations } from "../../../../i18n/translations.enum";
-import { KeyOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  ClockCircleOutlined,
+  KeyOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { useLogin } from "../../../../hooks/api/authentication/v1/use-login";
 import { AuthCredentialsModel } from "../../../../models/auth/auth-credentials.model";
 import { DomainModel } from "../../../../models/domain/domain.model";
@@ -48,6 +52,7 @@ export default function UsernameAndPasswordFormStep({
   const wrongCredentials =
     error?.response?.status == 401 &&
     error?.response.data.section === HttpExceptionSections.AUTH;
+  const tooManyAttempts = error?.response?.status === 429;
 
   return (
     <Form form={form} onFinish={login}>
@@ -61,6 +66,7 @@ export default function UsernameAndPasswordFormStep({
             "form.steps.username-and-password.fields.username.Label"
           )}
           prefix={<UserOutlined />}
+          maxLength={16}
         />
       </FormItem>
       <FormItem
@@ -73,6 +79,7 @@ export default function UsernameAndPasswordFormStep({
             "form.steps.username-and-password.fields.password.Label"
           )}
           prefix={<KeyOutlined />}
+          maxLength={128}
         />
       </FormItem>
 
@@ -82,6 +89,16 @@ export default function UsernameAndPasswordFormStep({
             showIcon
             type="error"
             message={t("errors.wrong-credentials.Message")}
+          />
+        </FormItem>
+      )}
+      {tooManyAttempts && (
+        <FormItem>
+          <Alert
+            showIcon
+            icon={<ClockCircleOutlined />}
+            type="error"
+            message={t("errors.too-many-attempts.Message")}
           />
         </FormItem>
       )}

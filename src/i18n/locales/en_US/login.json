@@ -43,6 +43,9 @@
         },
         "wrong-credentials": {
             "Message": "The user does not exist or the password is wrong"
+        },
+        "too-many-attempts": {
+            "Message": "You did too many failed login attempts. Please, wait a few seconds before trying again."
         }
     }
 }
