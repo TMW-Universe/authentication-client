@@ -28,6 +28,13 @@ export default function LoginForm({ domain }: Props) {
     window.open("https://" + domain, "_blank");
   };
 
+  if (isLoadingDomainInfo)
+    return (
+      <div className={styles["domain-info-loading-container"]}>
+        <Spin />
+      </div>
+    );
+
   if (status === "error")
     return (
       <Error
@@ -52,15 +59,9 @@ export default function LoginForm({ domain }: Props) {
         </Row>
         <Divider />
       </Col>
-      {isLoadingDomainInfo ? (
-        <div className={styles["domain-info-loading-container"]}>
-          <Spin />
-        </div>
-      ) : (
-        <Col span={24}>
-          <LoginSteps domain={domain} />
-        </Col>
-      )}
+      <Col span={24}>
+        <LoginSteps domain={domain} />
+      </Col>
     </Row>
   );
 }
