@@ -27,7 +27,11 @@ export default function LoginSteps({ domain }: Props) {
 
   if (accessToken && staySignedIn === undefined) {
     return (
-      <StaySignedInFormStep domain={domain} setStaySignedIn={setStaySignedIn} />
+      <StaySignedInFormStep
+        accessToken={accessToken}
+        domain={domain}
+        setStaySignedIn={setStaySignedIn}
+      />
     );
   }
 
