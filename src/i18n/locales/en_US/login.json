@@ -47,5 +47,14 @@
         "too-many-attempts": {
             "Message": "You did too many failed login attempts. Please, wait a few seconds before trying again."
         }
+    },
+    "using-stored-account": {
+        "Title": "Stored accounts",
+        "add-account": {
+            "Text": "Add account"
+        },
+        "expired": {
+            "Text": "Session expired"
+        }
     }
 }

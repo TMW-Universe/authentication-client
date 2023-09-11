@@ -1,12 +1,10 @@
-import { Col, Divider, Row, Spin, Typography, theme } from "antd";
+import { Col, Divider, Row, Typography, theme } from "antd";
 import tmw_universe_logo from "../../assets/branding/tmw_universe_logo.png";
 import styles from "./login-form.module.css";
 import { useTranslation } from "react-i18next";
 import { Translations } from "../../i18n/translations.enum";
 import LoginSteps from "./login-steps/login-steps";
 import { DomainModel } from "../../models/domain/domain.model";
-import { useDomainInfo } from "../../hooks/api/domains/use-domain-info";
-import Error from "../error/error";
 
 const { Title, Link } = Typography;
 
@@ -20,28 +18,9 @@ export default function LoginForm({ domain }: Props) {
 
   const { t } = useTranslation([Translations.login]);
 
-  const { isFetching: isLoadingDomainInfo, status } = useDomainInfo(
-    domain.domain
-  );
-
   const openDomain = () => {
     window.open("https://" + domain, "_blank");
   };
-
-  if (isLoadingDomainInfo)
-    return (
-      <div className={styles["domain-info-loading-container"]}>
-        <Spin />
-      </div>
-    );
-
-  if (status === "error")
-    return (
-      <Error
-        title={t("errors.invalid-domain.Title")}
-        message={t("errors.invalid-domain.Message", { domain: domain.domain })}
-      />
-    );
 
   return (
     <Row gutter={[12, 12]}>

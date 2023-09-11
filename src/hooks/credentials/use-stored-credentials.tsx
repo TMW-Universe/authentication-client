@@ -33,6 +33,10 @@ export function useStoredCredentials() {
     });
   };
 
+  const hasStoredCredentials = Object.entries(credentials).some(
+    (domainCredentials) => Object.keys(domainCredentials).length > 0
+  );
+
   const removeCredential = (domain: string, id: string) => {
     const creds = { ...credentials };
 
@@ -51,6 +55,7 @@ export function useStoredCredentials() {
     readStoredCredentials,
     addCredential,
     removeCredential,
+    hasStoredCredentials,
   };
 }
 
