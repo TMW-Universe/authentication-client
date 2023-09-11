@@ -39,9 +39,7 @@ export default function UsernameAndPasswordFormStep({
           credentials: values,
         });
       else throw new Error();
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) {}
   };
 
   return (

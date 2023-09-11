@@ -18,3 +18,11 @@
     color: --antd-primary-color;
   }
 }
+
+.domain-info-loading-container {
+  height: 10em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
