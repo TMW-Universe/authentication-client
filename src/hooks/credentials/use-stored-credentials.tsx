@@ -33,7 +33,7 @@ export function useStoredCredentials() {
     });
   };
 
-  const hasStoredCredentials = Object.entries(credentials).some(
+  const hasStoredCredentials = Object.values(credentials).some(
     (domainCredentials) => Object.keys(domainCredentials).length > 0
   );
 
