@@ -27,16 +27,21 @@ export default function UsernameAndPasswordFormStep({
 
   const login = async (values: UsernameAndPasswordFormModel) => {
     try {
-      await loginMutation(values);
+      const res = await loginMutation(values);
+      if (res.data.accessToken)
+        onSuccessfulCredentials({
+          requires2FA: false,
+          accessToken: res.data.accessToken,
+        });
+      else if (res.data.requires2FA)
+        onSuccessfulCredentials({
+          requires2FA: true,
+          credentials: values,
+        });
+      else throw new Error();
     } catch (e) {
       console.error(e);
     }
-
-    // DEBUG (must remove)
-    onSuccessfulCredentials({
-      requires2FA: true,
-      credentials: form.getFieldsValue(),
-    });
   };
 
   return (

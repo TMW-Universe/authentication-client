@@ -9,8 +9,8 @@ type Options = {
 export function useLogin(domain: string) {
   return useMutation({
     mutationFn: async (options: Options) =>
-      await axios.post(
-        `${import.meta.env.API_HOST}/authentication/authenticate`,
+      await axios.post<ResponseType>(
+        `${import.meta.env.VITE_API_HOST}/api/authentication/login`,
         {
           ...options,
           domain,
@@ -18,4 +18,9 @@ export function useLogin(domain: string) {
       ),
     mutationKey: ["authentication", "authenticate", domain],
   });
+}
+
+interface ResponseType {
+  requires2FA: boolean;
+  accessToken: string;
 }
