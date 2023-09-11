@@ -13,5 +13,5 @@ export function decodeJwt(token: string) {
       .join("")
   );
 
-  return JSON.parse(jsonPayload) as JwtToken;
+  return JSON.parse(jsonPayload) as Omit<JwtToken, "accessToken">;
 }

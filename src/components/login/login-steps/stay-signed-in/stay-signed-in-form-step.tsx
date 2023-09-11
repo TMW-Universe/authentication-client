@@ -23,7 +23,10 @@ export default function StaySignedInFormStep({
   const { addCredential } = useStoredCredentials();
 
   const doStay = () => {
-    addCredential(domain.domain, decodeJwt(accessToken));
+    addCredential(domain.domain, {
+      ...decodeJwt(accessToken),
+      accessToken,
+    });
     setStaySignedIn(true);
   };
 

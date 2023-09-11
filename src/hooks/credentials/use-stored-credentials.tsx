@@ -65,4 +65,5 @@ export interface JwtToken {
   iat: number;
   exp: number;
   iss: string;
+  accessToken: string;
 }
