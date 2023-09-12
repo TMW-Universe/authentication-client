@@ -33,6 +33,7 @@ export default function UsernameAndPasswordFormStep({
   } = useLogin(domain.domain);
 
   const login = async (values: UsernameAndPasswordFormModel) => {
+    if (!values.password || !values.username) return;
     try {
       const res = await loginMutation(values);
       if (res.data.accessToken)
