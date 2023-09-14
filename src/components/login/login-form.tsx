@@ -5,21 +5,23 @@ import { useTranslation } from "react-i18next";
 import { Translations } from "../../i18n/translations.enum";
 import LoginSteps from "./login-steps/login-steps";
 import { DomainModel } from "../../models/domain/domain.model";
+import { OnAuthEnded } from "../../types/auth/on-auth-ended.type";
 
 const { Title, Link } = Typography;
 
 type Props = {
   domain: DomainModel;
+  onAuthEnded: OnAuthEnded;
 };
 
-export default function LoginForm({ domain }: Props) {
+export default function LoginForm({ domain, onAuthEnded }: Props) {
   const { useToken } = theme;
   const { token } = useToken();
 
   const { t } = useTranslation([Translations.login]);
 
   const openDomain = () => {
-    window.open("https://" + domain, "_blank");
+    window.open("https://" + domain.domain, "_blank");
   };
 
   return (
@@ -39,7 +41,7 @@ export default function LoginForm({ domain }: Props) {
         <Divider />
       </Col>
       <Col span={24}>
-        <LoginSteps domain={domain} />
+        <LoginSteps domain={domain} onAuthEnded={onAuthEnded} />
       </Col>
     </Row>
   );
