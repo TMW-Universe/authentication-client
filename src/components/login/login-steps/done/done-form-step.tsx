@@ -9,9 +9,7 @@ type Props = {
 
 export default function DoneFormStep({ accessToken, onAuthEnded }: Props) {
   useEffect(() => {
-    setTimeout(() => {
-      onAuthEnded({ accessToken });
-    }, 1500);
+    onAuthEnded({ accessToken });
   }, []);
 
   return <Result status="success" />;

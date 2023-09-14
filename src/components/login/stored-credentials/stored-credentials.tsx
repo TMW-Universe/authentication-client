@@ -20,9 +20,14 @@ const { Title, Text } = Typography;
 type Props = {
   domain: string;
   onNewAccount: () => void;
+  onSelectCredentials: (options: { accessToken: string }) => void;
 };
 
-export default function StoredCredentials({ domain, onNewAccount }: Props) {
+export default function StoredCredentials({
+  domain,
+  onNewAccount,
+  onSelectCredentials,
+}: Props) {
   const { credentials: allCredentials, removeCredential } =
     useStoredCredentials();
 
@@ -49,9 +54,14 @@ export default function StoredCredentials({ domain, onNewAccount }: Props) {
           <Divider>{t("using-stored-account.Title")}</Divider>
         )}
       </Col>
-      {Object.entries(credentials).map(([key, { user, exp }]) => (
+      {Object.entries(credentials).map(([key, { user, exp, accessToken }]) => (
         <Col span={24} key={key}>
-          <Card hoverable>
+          <Card
+            hoverable
+            onClick={() => {
+              onSelectCredentials({ accessToken });
+            }}
+          >
             <div className={styles.credential}>
               <div>
                 <Avatar>

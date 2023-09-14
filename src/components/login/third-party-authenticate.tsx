@@ -63,6 +63,7 @@ export default function ThirdPartyAuthenticate({ domain, encKey }: Props) {
         <StoredCredentials
           domain={domain}
           onNewAccount={() => setWantsNewAccount(true)}
+          onSelectCredentials={onAuthEnded}
         />
       ) : (
         <Card>
