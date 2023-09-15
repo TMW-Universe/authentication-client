@@ -54,43 +54,45 @@ export default function StoredCredentials({
           <Divider>{t("using-stored-account.Title")}</Divider>
         )}
       </Col>
-      {Object.entries(credentials).map(([key, { user, exp, accessToken }]) => (
-        <Col span={24} key={key}>
-          <Card
-            hoverable
-            onClick={() => {
-              onSelectCredentials({ accessToken });
-            }}
-          >
-            <div className={styles.credential}>
-              <div>
-                <Avatar>
-                  <UserOutlined />
-                </Avatar>
+      {Object.entries(credentials).map(
+        ([key, { userId, exp, accessToken }]) => (
+          <Col span={24} key={key}>
+            <Card
+              hoverable
+              onClick={() => {
+                onSelectCredentials({ accessToken });
+              }}
+            >
+              <div className={styles.credential}>
+                <div>
+                  <Avatar>
+                    <UserOutlined />
+                  </Avatar>
+                </div>
+                <div className={styles.info}>
+                  <Title level={4}>{userId}</Title>
+                  {isBefore(exp * 1000, Date.now()) && (
+                    <Text className={styles["expired-token"]}>
+                      {t("using-stored-account.expired.Text")}
+                    </Text>
+                  )}
+                </div>
+                <div>
+                  <Button
+                    icon={<DeleteOutlined />}
+                    type="link"
+                    danger
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeCredential(domain, userId);
+                    }}
+                  />
+                </div>
               </div>
-              <div className={styles.info}>
-                <Title level={4}>{user.username}</Title>
-                {isBefore(exp * 1000, Date.now()) && (
-                  <Text className={styles["expired-token"]}>
-                    {t("using-stored-account.expired.Text")}
-                  </Text>
-                )}
-              </div>
-              <div>
-                <Button
-                  icon={<DeleteOutlined />}
-                  type="link"
-                  danger
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    removeCredential(domain, user.id);
-                  }}
-                />
-              </div>
-            </div>
-          </Card>
-        </Col>
-      ))}
+            </Card>
+          </Col>
+        )
+      )}
     </Row>
   );
 }
