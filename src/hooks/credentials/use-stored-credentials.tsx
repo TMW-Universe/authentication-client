@@ -28,7 +28,7 @@ export function useStoredCredentials() {
         ...(Object.keys(credentials).includes(domain)
           ? credentials[domain]
           : {}),
-        [credential.user.id]: credential,
+        [credential.userId]: credential,
       },
     });
   };
@@ -62,10 +62,7 @@ export function useStoredCredentials() {
 type StoredCredentials = { [domain: string]: { [id: string]: JwtToken } };
 
 export interface JwtToken {
-  user: {
-    id: string;
-    username: string;
-  };
+  userId: string;
   domains: string[];
   iat: number;
   exp: number;
