@@ -20,7 +20,7 @@ export default function StaySignedInFormStep({
 }: Props) {
   const { t } = useTranslation([Translations.login]);
 
-  const { addCredential } = useStoredCredentials();
+  const { addCredential } = useStoredCredentials({ domain: domain.domain });
 
   const doStay = () => {
     addCredential(domain.domain, {

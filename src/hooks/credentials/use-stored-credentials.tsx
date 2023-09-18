@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export function useStoredCredentials() {
+type Options = {
+  domain: string;
+};
+
+export function useStoredCredentials({ domain }: Options) {
   const readStoredCredentials = () => {
     const rawCredentials = JSON.parse(
       localStorage.getItem("credentials") ?? "{}"
@@ -33,9 +37,9 @@ export function useStoredCredentials() {
     });
   };
 
-  const hasStoredCredentials = Object.values(credentials).some(
-    (domainCredentials) => Object.keys(domainCredentials).length > 0
-  );
+  const hasStoredCredentials = Object.keys(credentials).includes(domain)
+    ? Object.keys(credentials[domain]).length > 0
+    : false;
 
   const removeCredential = (domain: string, id: string) => {
     const creds = { ...credentials };

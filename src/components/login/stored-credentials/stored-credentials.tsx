@@ -29,7 +29,7 @@ export default function StoredCredentials({
   onSelectCredentials,
 }: Props) {
   const { credentials: allCredentials, removeCredential } =
-    useStoredCredentials();
+    useStoredCredentials({ domain });
 
   const { t } = useTranslation([Translations.login]);
 

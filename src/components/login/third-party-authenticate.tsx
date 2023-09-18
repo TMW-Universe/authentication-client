@@ -22,7 +22,7 @@ export default function ThirdPartyAuthenticate({ domain, encKey }: Props) {
 
   const { isFetching: isLoadingDomainInfo, status } = useDomainInfo(domain);
   const [wantsNewAccount, setWantsNewAccount] = useState(false);
-  const { hasStoredCredentials } = useStoredCredentials();
+  const { hasStoredCredentials } = useStoredCredentials({ domain });
 
   const stringToHex = (str: string) => {
     let hex = "";
