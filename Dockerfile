@@ -1,20 +1,14 @@
-FROM node:20.6.1-alpine3.18
-
-# set working directory
+# Stage 1: Build React app
+FROM node:20.6.1-alpine3.18 as build
 WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install --immutable
-# RUN npm install react-scripts@3.4.1 -g
-
-# add app
-COPY . ./
-
-EXPOSE 8001
-# start app
-CMD ["npm", "run","dev"]
+# Stage 2: Serve React app with Nginx
+FROM nginx:latest
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 8002
+CMD ["nginx", "-g", "daemon off;"]

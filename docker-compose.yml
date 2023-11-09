@@ -1,15 +1,9 @@
-version: "3.1"
+version: '3'
 services:
-  react:
+  web:
+    container_name: auth-client
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: auth-client-client
-    volumes:
-      - .:/app
     ports:
-      - 8002:8002
-    command: "npm run dev"
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    tty: true
+      - "8002:8002"
