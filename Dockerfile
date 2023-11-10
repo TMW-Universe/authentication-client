@@ -1,6 +1,10 @@
 # Stage 1: Build React app
 FROM node:20.6.1-alpine3.18 as build
 WORKDIR /app
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
 COPY package*.json ./
 RUN npm install
 COPY . .
